@@ -19,7 +19,13 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+				script: ['Marck Script', 'cursive'],
+				sans: ['Golos Text', 'Arial', 'sans-serif']
+			},
 			colors: {
+				gold: 'hsl(var(--gold))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
