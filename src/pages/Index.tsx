@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Icon from '@/components/ui/icon';
+import Icon from '@/components/ui/icon';  
 import Splash from '@/components/booktook/Splash';
 import Feed from '@/components/booktook/Feed';
 import MyBooks from '@/components/booktook/MyBooks';
@@ -36,12 +36,6 @@ const Index = () => {
         {showNav && (
           <div className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-5 py-3">
             <span className="font-script text-2xl text-gold drop-shadow">BookTook</span>
-            <button
-              onClick={() => setDark((v) => !v)}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-card/70 text-gold backdrop-blur-sm"
-            >
-              <Icon name={dark ? 'Sun' : 'Moon'} size={18} />
-            </button>
           </div>
         )}
 
@@ -62,7 +56,7 @@ const Index = () => {
           {screen === 'editor' && <Editor />}
           {screen === 'studio' && <Studio onArtist={() => setScreen('artists')} />}
           {screen === 'artists' && <Artists />}
-          {screen === 'profile' && <Profile isArtist={isArtist} onToggleArtist={() => setIsArtist((v) => !v)} />}
+          {screen === 'profile' && <Profile isArtist={isArtist} onToggleArtist={() => setIsArtist((v) => !v)} dark={dark} onToggleDark={() => setDark((v) => !v)} />}
         </div>
 
         {/* Bottom nav */}
