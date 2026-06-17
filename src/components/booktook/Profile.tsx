@@ -1,136 +1,20 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
-
-interface Book {
-  id: number;
-  cover: string;
-  title: string;
-  author: string;
-  description: string;
-  price: string;
-  genre: string;
-}
-
-const books: Book[] = [
-  {
-    id: 1,
-    cover: 'https://cdn.poehali.dev/projects/0bb88797-d7ad-41ed-aa71-b38ecd05ac7c/files/3bed98dc-b5ab-4985-85f3-79302207887d.jpg',
-    title: 'Песнь полуночных колоколов',
-    author: 'Эвелина Морн',
-    description: 'Когда колокола замолчали на третью ночь, Эвелина поняла — замок живёт. Готический роман о тайне, потере и той темноте, что прячется не снаружи, а внутри нас.',
-    price: '₽ 349',
-    genre: 'Готика',
-  },
-  {
-    id: 2,
-    cover: 'https://cdn.poehali.dev/projects/0bb88797-d7ad-41ed-aa71-b38ecd05ac7c/files/3d41b6bf-317d-45cc-a5dc-41056711102a.jpg',
-    title: 'Сад забытых имён',
-    author: 'Тимур Вечный',
-    description: 'В лесу, где каждый светлячок — чья-то незаконченная мечта, молодой маг ищет имя, которое у него похитили при рождении. Эпическое фэнтези о памяти и идентичности.',
-    price: '₽ 299',
-    genre: 'Фэнтези',
-  },
-  {
-    id: 3,
-    cover: 'https://cdn.poehali.dev/projects/0bb88797-d7ad-41ed-aa71-b38ecd05ac7c/files/f6c61476-c62d-4543-ad80-f4fc1dde0104.jpg',
-    title: 'Хранитель пепельной башни',
-    author: 'Лидия Осень',
-    description: 'Библиотека помнила всех — и тех, кто осмелился мечтать, и тех, кто боялся открыть первую страницу. Магический реализм на грани элегии.',
-    price: '₽ 419',
-    genre: 'Магреализм',
-  },
-  {
-    id: 4,
-    cover: 'https://cdn.poehali.dev/projects/0bb88797-d7ad-41ed-aa71-b38ecd05ac7c/files/3bed98dc-b5ab-4985-85f3-79302207887d.jpg',
-    title: 'Тени под крыльями',
-    author: 'Эвелина Морн',
-    description: 'Вторая книга цикла. Тьма разрослась, и теперь граница между сном и явью стала тоньше папиросной бумаги.',
-    price: '₽ 379',
-    genre: 'Готика',
-  },
-  {
-    id: 5,
-    cover: 'https://cdn.poehali.dev/projects/0bb88797-d7ad-41ed-aa71-b38ecd05ac7c/files/3d41b6bf-317d-45cc-a5dc-41056711102a.jpg',
-    title: 'Ледяные зеркала',
-    author: 'Нора Фрост',
-    description: 'Среди вечных льдов есть зеркала, которые показывают не отражение, а будущее. Детектив и мистика в одном флаконе.',
-    price: '₽ 289',
-    genre: 'Мистика',
-  },
-];
-
-interface BookCardProps {
-  book: Book;
-  onClose: () => void;
-}
-
-const BookCard = ({ book, onClose }: BookCardProps) => (
-  <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm" onClick={onClose}>
-    <div
-      className="w-full max-w-md animate-slide-up overflow-hidden rounded-t-3xl bg-card pb-8"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {/* Обложка-шапка */}
-      <div className="relative h-64 w-full overflow-hidden">
-        <img src={book.cover} alt={book.title} className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
-        <button
-          onClick={onClose}
-          className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm"
-        >
-          <Icon name="X" size={18} />
-        </button>
-        <span className="absolute left-4 top-4 rounded-full bg-gold/90 px-3 py-0.5 font-sans text-xs font-semibold text-primary-foreground">
-          {book.genre}
-        </span>
-      </div>
-
-      {/* Контент */}
-      <div className="px-6 pt-2">
-        <h2 className="font-serif text-3xl font-semibold leading-tight text-foreground">{book.title}</h2>
-        <p className="mt-1 font-sans text-sm text-gold">@{book.author}</p>
-
-        <p className="mt-4 font-serif text-base leading-relaxed text-muted-foreground">{book.description}</p>
-
-        {/* Дополнительные превью */}
-        <div className="mt-4 flex gap-2 overflow-x-auto no-scrollbar pb-1">
-          {[book.cover, book.cover, book.cover].map((c, i) => (
-            <img
-              key={i}
-              src={c}
-              alt="preview"
-              className="h-16 w-12 shrink-0 rounded-lg object-cover opacity-80 ring-1 ring-border"
-            />
-          ))}
-        </div>
-
-        {/* Кнопка купить */}
-        <div className="mt-5 flex items-center gap-3">
-          <span className="font-serif text-3xl font-bold text-foreground">{book.price}</span>
-          <button className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-gold py-3.5 font-sans font-semibold text-primary-foreground shadow-md transition active:scale-95 gold-glow">
-            <Icon name="ShoppingBag" size={20} />
-            Купить книгу
-          </button>
-        </div>
-        <p className="mt-2 text-center font-sans text-xs text-muted-foreground">
-          Защищено Казначеем · безопасная оплата
-        </p>
-      </div>
-    </div>
-  </div>
-);
+import type { Store, BookItem } from './store';
 
 interface ProfileProps {
   isArtist: boolean;
   onToggleArtist: () => void;
   dark: boolean;
   onToggleDark: () => void;
+  store: Store;
 }
 
-const Profile = ({ isArtist, onToggleArtist, dark, onToggleDark }: ProfileProps) => {
+const Profile = ({ isArtist, onToggleArtist, dark, onToggleDark, store }: ProfileProps) => {
+  const shelfBooks = store.shelves.flatMap((s) => s.books);
   const [tab, setTab] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [selectedBook, setSelectedBook] = useState<BookItem | null>(null);
 
   const tabs = isArtist
     ? ['Мастерская', 'Библиотека', 'Портфолио']
@@ -212,7 +96,13 @@ const Profile = ({ isArtist, onToggleArtist, dark, onToggleDark }: ProfileProps)
               className="flex items-end gap-4 overflow-x-auto no-scrollbar pb-2 pt-3"
               style={{ perspective: '900px' }}
             >
-              {books.map((book, i) => (
+              {shelfBooks.length === 0 && (
+                <div className="flex flex-col items-center justify-center py-8 px-4 gap-2 text-center">
+                  <Icon name="BookOpen" size={32} className="text-muted-foreground" />
+                  <p className="font-sans text-xs text-muted-foreground">Купи книги — они появятся здесь</p>
+                </div>
+              )}
+              {shelfBooks.map((book, i) => (
                 <button
                   key={book.id}
                   onClick={() => setSelectedBook(book)}
@@ -324,9 +214,31 @@ const Profile = ({ isArtist, onToggleArtist, dark, onToggleDark }: ProfileProps)
         </div>
       )}
 
-      {/* Карточка книги */}
+      {/* Карточка книги из полки */}
       {selectedBook && (
-        <BookCard book={selectedBook} onClose={() => setSelectedBook(null)} />
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/60 backdrop-blur-sm" onClick={() => setSelectedBook(null)}>
+          <div className="w-full max-w-md animate-slide-up overflow-hidden rounded-t-3xl bg-card pb-8" onClick={(e) => e.stopPropagation()}>
+            <div className="relative h-56 overflow-hidden">
+              <img src={selectedBook.cover} alt={selectedBook.title} className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
+              <button onClick={() => setSelectedBook(null)} className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm">
+                <Icon name="X" size={18} />
+              </button>
+              <span className="absolute left-4 top-4 rounded-full bg-gold/90 px-3 py-0.5 font-sans text-xs font-semibold text-primary-foreground">{selectedBook.genre}</span>
+            </div>
+            <div className="px-6 pt-3">
+              <h2 className="font-serif text-2xl font-semibold text-foreground">{selectedBook.title}</h2>
+              <p className="mt-0.5 font-sans text-sm text-gold">@{selectedBook.author}</p>
+              <p className="mt-3 font-serif text-sm leading-relaxed text-muted-foreground">{selectedBook.description}</p>
+              <div className="mt-4 flex items-center gap-3">
+                <span className="font-serif text-2xl font-bold text-foreground">₽ {selectedBook.price}</span>
+                <span className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-muted py-3 font-sans text-sm font-medium text-muted-foreground">
+                  <Icon name="Check" size={18} /> Уже в библиотеке
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
